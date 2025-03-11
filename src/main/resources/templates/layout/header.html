@@ -1,0 +1,71 @@
+<!-- <div class="container-fluid p-0"> -->
+<nav class="navbar navbar-expand-lg bg-light shadow-sm sticky-top">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center logo-text" href="/">
+            <img src="/image/favicon/favicon-32x32.png" alt="">
+            <p class="fs-4 text-primary mb-0 ms-2 align-self-center">Vbooks.net</p>
+        </a>
+
+        <!-- Nút Toggle trên mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Nội dung Navbar -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <!-- Thanh tìm kiếm -->
+            <form class="d-flex mx-auto" role="search" method="get" action="/search">
+                <input class="form-control me-2" name="title" type="search" placeholder="Tìm kiếm sản phẩm..."
+                    aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit">Tìm</button>
+            </form>
+
+            <!-- Giỏ hàng & Tài khoản -->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-cart3"></i> Giỏ hàng
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> Tài khoản
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="login"><i class="fa-solid fa-right-to-bracket"></i>
+                                Đăng
+                                nhập</a></li>
+
+                        <li><a class="dropdown-item" href="signin"><i class="fa-solid fa-user-plus"></i> Đăng
+                                ký</a>
+                        </li>
+                        <li><a class="dropdown-item" href="changepassword"><i class="fa-solid fa-key"></i> Đổi mật
+                                khẩu</a></li>
+                        <li><a class="dropdown-item" href="forgetpassword"><i class="fa-solid fa-lock"></i> Quên mật
+                                khẩu</a></li>
+                        <li><a class="dropdown-item" href="account/index"><i class="fa-solid fa-user-pen"></i> Trang cá
+                                nhân</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="admin/book/index">
+                                <i class="fa-solid fa-cogs"></i> Trang quản trị
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="logout"><i class="fa-solid fa-right-from-bracket"></i>
+                                Đăng xuất</a></li>
+                    </ul>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- </div> -->
