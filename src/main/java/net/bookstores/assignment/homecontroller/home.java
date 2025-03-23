@@ -15,7 +15,7 @@ import net.bookstores.assignment.entities.Author;
 import net.bookstores.assignment.entities.Book;
 
 @Controller
-public class home {
+public class Home {
     @Autowired
     BookDao bookDao;
     @Autowired
