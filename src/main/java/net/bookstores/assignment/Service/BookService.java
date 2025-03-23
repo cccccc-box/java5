@@ -1,4 +1,4 @@
-package net.bookstores.assignment.service;
+package net.bookstores.assignment.Service;
 
 import java.util.Optional;
 
