@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.bookstores.assignment.Service.BookService;
+import net.bookstores.assignment.service.BookService;
 
 @Controller
 public class BookDetail {
