@@ -41,7 +41,7 @@ public class UserService {
             User user = User.builder()
                     .userId(userId)
                     .fullName(fullName)
-                    .password(existingUser.get().getPassword()) // cái này giữ mk
+                    .password(existingUser.get().getPassword()) // Giữ nguyên mật khẩu
                     .email(email)
                     .phone(phone)
                     .address(address)
