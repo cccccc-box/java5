@@ -1,6 +1,5 @@
 package net.bookstores.assignment.admincontroller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import net.bookstores.assignment.dao.UserDao;
 import net.bookstores.assignment.entities.User;
+import net.bookstores.assignment.service.UserService;
 
 @Controller
 @RequestMapping("/admin/user")
@@ -20,10 +20,12 @@ public class UserController {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/index")
     public String index(Model model) {
-        List<User> usersList = userDao.findAll();
-        model.addAttribute("list", usersList);
+        model.addAttribute("list", userService.findAll());
         return "admin/users/t";
     }
 
