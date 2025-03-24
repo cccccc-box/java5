@@ -10,10 +10,6 @@ import net.bookstores.assignment.service.HomeService;
 
 @Controller
 public class Home {
-<<<<<<< HEAD
-
-=======
->>>>>>> 0998af0aae97795f326cb358d1b85d6cd420d17b
     @Autowired
     private HomeService homeService;
 
