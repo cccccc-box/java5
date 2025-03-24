@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.bookstores.assignment.dao.UserDao;
 import net.bookstores.assignment.entities.User;
+import net.bookstores.assignment.service.UserService;
 
 @Controller
 @RequestMapping("/admin/user")
 public class UserController {
     @Autowired
-    UserDao userDao;
+    private UserService userService;
 
     @GetMapping("/index")
     public String index(Model model) {
-        List<User> usersList = userDao.findAll();
+        List<User> usersList = userService.getAllUsers();
         model.addAttribute("list", usersList);
         return "admin/users/t";
     }
@@ -33,21 +33,23 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String create(Model model, @RequestParam("fullName") String fullName, @RequestParam("email") String email,
-            @RequestParam("password") String password, @RequestParam("phone") String phone,
-            @RequestParam("address") String address, @RequestParam("role") Boolean role,
-            @RequestParam("active") Boolean active) {
-        User user = User.builder().fullName(fullName).email(email).password(password).phone(phone).address(address)
-                .role(role).active(active).build();
-        userDao.save(user);
+    public String create(Model model, 
+                         @RequestParam("fullName") String fullName, 
+                         @RequestParam("email") String email,
+                         @RequestParam("password") String password, 
+                         @RequestParam("phone") String phone,
+                         @RequestParam("address") String address, 
+                         @RequestParam("role") Boolean role,
+                         @RequestParam("active") Boolean active) {
+        userService.createUser(fullName, email, password, phone, address, role, active);
         return "redirect:/admin/user/index";
     }
 
     @GetMapping("/edit")
     public String updateForm(@RequestParam("id") Integer id, Model model) {
-        Optional<User> user = userDao.findById(id);
+        Optional<User> user = userService.getUserById(id);
         if (user.isPresent()) {
-            model.addAttribute("user", user.get()); // Loại bỏ Optional
+            model.addAttribute("user", user.get());
             return "admin/users/update";
         } else {
             return "redirect:/error";
@@ -55,26 +57,20 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String update(Model model, @RequestParam("userId") Integer userId, @RequestParam("fullName") String fullName,
-            @RequestParam("email") String email,
-            @RequestParam("phone") String phone,
-            @RequestParam("address") String address,
-            @RequestParam("role") Boolean role,
-            @RequestParam("active") Boolean active) {
-        Optional<User> userP = userDao.findById(userId);
-        if (userP.isPresent()) {
-            User user = User.builder().userId(userId).fullName(fullName).password(userP.get().getPassword())
-                    .email(email).phone(phone)
-                    .address(address)
-                    .role(role).active(active).build();
-            userDao.save(user);
-        }
+    public String update(@RequestParam("userId") Integer userId, 
+                         @RequestParam("fullName") String fullName,
+                         @RequestParam("email") String email, 
+                         @RequestParam("phone") String phone,
+                         @RequestParam("address") String address, 
+                         @RequestParam("role") Boolean role,
+                         @RequestParam("active") Boolean active) {
+        userService.updateUser(userId, fullName, email, phone, address, role, active);
         return "redirect:/admin/user/index";
     }
 
     @GetMapping("/delete")
     public String delete(@RequestParam("id") Integer id) {
-        userDao.deleteById(id);
+        userService.deleteUser(id);
         return "redirect:/admin/user/index";
     }
 }
