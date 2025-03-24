@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import net.bookstores.assignment.service.HomeService;
 
 @Controller
-public class Home {
+public class Home_tmp {
 
     @Autowired
     private HomeService homeService;
