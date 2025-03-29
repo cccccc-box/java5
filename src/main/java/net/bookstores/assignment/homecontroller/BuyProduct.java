@@ -32,15 +32,17 @@ public class BuyProduct {
     public Object buy(@RequestParam("bookId") Integer bookId) {
         Optional<Book> bookOptional = bookDao.findById(bookId);
         Book book = bookOptional.get();
-
         User user = (User) session.getAttribute("user");
+
         // thêm vào bảng Orders
-        Order order = Order.builder().user(user).book(book).price(book.getPrice()).amount(1)
-                .discountPercentage(book.getDiscountPercentage()).discountedPrice(book.getDiscountedPrice())
-                .address(user.getAddress()).createDate(new Date()).build();
-        orderDao.save(order);
-        return ResponseEntity.ok("<script>alert('Mua hàng thành công!');"
-                + "window.location.href='/';</script>");
+        // Order order =
+        // Order.builder().user(user).book(book).price(book.getPrice()).amount(1)
+        // .discountPercentage(book.getDiscountPercentage()).discountedPrice(book.getDiscountedPrice())
+        // .address(user.getAddress()).createDate(new Date()).build();
+        // orderDao.save(order);
+        // return ResponseEntity.ok("<script>alert('Mua hàng thành công!');"
+        // + "window.location.href='/';</script>");
+        return "home/buy";
     }
 
 }

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin đơn hàng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .quantity-input { max-width: 70px; text-align: center; }
+        .total-price { font-weight: 500; }
+    </style>
+</head>
+<body class="bg-light">
+    <div th:replace="~{/layout/header.html}"></div>
+    <div class="container">
+
+        <!-- Nút Toggle trên mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Nội dung Navbar -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <!-- Thanh tìm kiếm -->
+            <form class="d-flex mx-auto" role="search">
+                <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..."
+                    aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit">Tìm</button>
+            </form>
+
+            <!-- Giỏ hàng & Tài khoản -->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-cart3"></i> Giỏ hàng
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> Tài khoản
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="login"><i class="fa-solid fa-right-to-bracket"></i>
+                                Đăng
+                                nhập</a></li>
+
+                        <li><a class="dropdown-item" href="signin"><i class="fa-solid fa-user-plus"></i> Đăng
+                                ký</a>
+                        </li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-key"></i> Đổi mật
+                                khẩu</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-lock"></i> Quên mật
+                                khẩu</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-pen"></i> Cập nhật
+                                thông tin</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="logout"><i class="fa-solid fa-right-from-bracket"></i>
+                                Đăng xuất</a></li>
+                    </ul>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container py-5">
+        <h1 class="mb-4">Thông tin đơn hàng</h1>
+        
+        <!-- Địa chỉ nhận hàng -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Địa chỉ nhận hàng</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Họ tên:</strong> Nguyễn Văn A</p>
+                        <p class="mb-1"><strong>Điện thoại:</strong> 0912 345 678</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Địa chỉ:</strong> Số 1, đường ABC, phường XYZ, quận 1, TP.HCM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Sản phẩm</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Đơn giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>iPhone 14 Pro Max</td>
+                            <td data-price="25000000">25.000.000₫</td>
+                            <td>
+                                <div class="d-flex gap-1 align-items-center">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity('product1', -1)">-</button>
+                                    <input type="number" id="product1" class="form-control quantity-input" value="1" min="1" 
+                                           data-price="25000000" onchange="calculateTotal('product1')">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity('product1', 1)">+</button>
+                                </div>
+                            </td>
+                            <td id="total-product1" class="total-price">25.000.000₫</td>
+                        </tr>
+                        <tr>
+                            <td>AirPods Pro 2</td>
+                            <td data-price="5500000">5.500.000₫</td>
+                            <td>
+                                <div class="d-flex gap-1 align-items-center">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity('product2', -1)">-</button>
+                                    <input type="number" id="product2" class="form-control quantity-input" value="2" min="1" 
+                                           data-price="5500000" onchange="calculateTotal('product2')">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity('product2', 1)">+</button>
+                                </div>
+                            </td>
+                            <td id="total-product2" class="total-price">11.000.000₫</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Thông tin thanh toán -->
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h5 class="mb-0">Thông tin thanh toán</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Nhập mã giảm giá" id="discount-code">
+                            <button class="btn btn-outline-secondary" onclick="applyDiscount()">Áp dụng</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="list-group">
+                    <div class="list-group-item d-flex justify-content-between">
+                        <span>Tạm tính:</span>
+                        <span id="subtotal">36.000.000₫</span>
+                    </div>
+                    <div class="list-group-item d-flex justify-content-between">
+                        <span>Giảm giá:</span>
+                        <span class="text-danger" id="discount">-0₫</span>
+                    </div>
+                    <div class="list-group-item d-flex justify-content-between">
+                        <span>Phí vận chuyển:</span>
+                        <span id="shipping-fee">30.000₫</span>
+                    </div>
+                    <div class="list-group-item d-flex justify-content-between fs-5 fw-bold">
+                        <span>Tổng thanh toán:</span>
+                        <span class="text-primary" id="grand-total">36.030.000₫</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div th:replace="~{/layout/footer.html}"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let discount = 0;
+        const shippingFee = 30000;
+
+        function updateQuantity(productId, change) {
+            const input = document.getElementById(productId);
+            let newValue = parseInt(input.value) + change;
+            if (newValue < 1) newValue = 1;
+            input.value = newValue;
+            calculateTotal(productId);
+        }
+
+        function calculateTotal(productId) {
+            const input = document.getElementById(productId);
+            const price = parseInt(input.dataset.price);
+            const quantity = parseInt(input.value);
+            const total = price * quantity;
+            
+            // Cập nhật thành tiền cho sản phẩm
+            document.getElementById(`total-${productId}`).textContent = formatCurrency(total);
+            updatePaymentSummary();
+        }
+
+        function applyDiscount() {
+            // Logic áp dụng mã giảm giá có thể thêm vào đây
+            discount = 1000000; // Tạm thời fix giá trị
+            document.getElementById('discount').textContent = `-${formatCurrency(discount)}`;
+            updatePaymentSummary();
+        }
+
+        function updatePaymentSummary() {
+            // Tính tổng tiền các sản phẩm
+            const productTotals = document.querySelectorAll('[id^="total-product"]');
+            let subtotal = 0;
+            
+            productTotals.forEach(element => {
+                subtotal += parseInt(element.textContent.replace(/[^\d]/g, ''));
+            });
+
+            // Cập nhật các khoản thanh toán
+            document.getElementById('subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('shipping-fee').textContent = formatCurrency(shippingFee);
+            
+            const grandTotal = subtotal - discount + shippingFee;
+            document.getElementById('grand-total').textContent = formatCurrency(grandTotal);
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', { 
+                style: 'currency', 
+                currency: 'VND',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Khởi tạo tính toán ban đầu
+        updatePaymentSummary();
+    </script>
+</body>
+</html>

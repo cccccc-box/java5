@@ -11,17 +11,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import net.bookstores.assignment.dao.OrderDao;
 import net.bookstores.assignment.dao.UserDao;
 import net.bookstores.assignment.entities.Order;
 import net.bookstores.assignment.entities.User;
+import net.bookstores.assignment.service.UserService;
 
 @Controller
 @RequestMapping("/account")
 public class Account {
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    UserService userService;
+
     @Autowired
     OrderDao orderDao;
     @Autowired
@@ -29,17 +36,14 @@ public class Account {
 
     @GetMapping("/index")
     public String trangCaNhanh(Model model) {
-        User user = (User) session.getAttribute("user");
-        model.addAttribute("fullName", user.getFullName());
-        model.addAttribute("email", user.getEmail());
-        model.addAttribute("phone", user.getPhone());
-        model.addAttribute("address", user.getAddress());
+        User user = userService.readCookie().get();
+        model.addAttribute("user", user);
         return "home/account";
     }
 
     @GetMapping("/edit")
     public String chinhSuaThongTin(Model model) {
-        User user = (User) session.getAttribute("user");
+        User user = userService.readCookie().get();
         model.addAttribute("user", user);
         return "home/editprofile";
     }
@@ -55,7 +59,7 @@ public class Account {
         user.setPhone(phone);
         user.setAddress(address);
         userDao.save(user);
-        session.setAttribute("user", user);
+        userService.updateUser(userId, fullName, email, phone, address);
         return "redirect:/account/index";
     }
 
@@ -67,6 +71,5 @@ public class Account {
         model.addAttribute("orders", orders);
         return "home/order";
     }
-    // eidt on github 2
 
 }

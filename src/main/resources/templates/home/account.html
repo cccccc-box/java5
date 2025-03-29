@@ -20,10 +20,10 @@
                         <img src="/image/oia-uia.gif" class="img-thumbnail" alt="Profile Picture">
                     </div>
                     <div class="col-md-8">
-                        <h4 th:text="${fullName}"></h4>
-                        <p th:text="'Email: '+${email}"></p>
-                        <p th:text="'SĐT: '+${phone}"></p>
-                        <p th:text="'Địa chỉ: '+${address}"></p>
+                        <h4 th:text="${user.fullName}"></h4>
+                        <p th:text="'Email: '+${user.email}"></p>
+                        <p th:text="'SĐT: '+${user.phone}"></p>
+                        <p th:text="'Địa chỉ: '+${user.address}"></p>
                         <a href="/account/edit" class="btn btn-warning">Chỉnh sửa thông tin của bạn</a>
                         <a href="/account/order" class="btn btn-info">Lịch sữ mua hàng</a>
                     </div>
