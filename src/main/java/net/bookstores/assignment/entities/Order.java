@@ -49,6 +49,23 @@ public class Order {
     @Column(name = "Address", nullable = false)
     private String address;
 
+    @Column(name = "Active")
+    private Boolean active;
+
+    @Column(name = "ProviderId")
+    private Integer providerId;
+
+    @Column(name = "DiscountId")
+    private Integer DiscountId;
+
     @Column(name = "CreateDate")
     private java.util.Date createDate;
+
+    @ManyToOne
+    @JoinColumn(name = "ProviderID")
+    private ShippingProvider shippingProvider;
+
+    @ManyToOne
+    @JoinColumn(name = "DiscountID")
+    private Discount discount;
 }

@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class Category {
     @Column(name = "CategoryID")
     private Integer categoryId;
 
+    @NotBlank(message = "Tên thể loại không được để trống")
     @Column(name = "Name", nullable = false, unique = true)
     private String name;
 

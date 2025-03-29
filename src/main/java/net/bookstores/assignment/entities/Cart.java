@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class Cart {
     @JoinColumn(name = "BookId", referencedColumnName = "BookId")
     private Book book;
 
+    @Min(value = 1, message = "Số lượng tối thiểu là 1")
     @Column(name = "Amount", nullable = false)
     private Integer amount;
 
