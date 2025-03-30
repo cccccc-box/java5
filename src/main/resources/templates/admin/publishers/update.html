@@ -15,12 +15,14 @@
     <div class="content">
         <h1>Cập nhật nhà xuất bản</h1>
         <div class="container mt-5">
-            <form class="row g-3" method="post" action="/admin/publisher/update">
+            <form class="row g-3" method="post" th:object="${publisher}" action="/admin/publisher/update">
                 <div class="col-12">
-                    <input hidden th:field="*{publisher.publisherId}">
+                    <input hidden th:field="*{publisherId}">
                     <label for="name" class="form-label"><span class="text">Tên nhà xuất bản</span></label>
-                    <input type="text" class="form-control" id="name" name="name" th:field="*{publisher.name}"
-                        placeholder="Nhập tên nhà xuất bản sách" required>
+                    <input type="text" class="form-control" id="name" name="name" th:field="*{name}"
+                        placeholder="Nhập tên nhà xuất bản sách">
+                        <div class="text-danger" th:errors="*{name}"></div>
+                        <div class="text-danger" th:if="${errorMessage}" th:text="${errorMessage}"></div>
                 </div>
 
                 <div class="row justify-content-center mt-5">

@@ -28,7 +28,7 @@ public class Publisher {
     private Integer publisherId;
 
     @NotBlank(message = "Tên nhà xuất bản không được để trống")
-    @Column(name = "Name", nullable = false, unique = true)
+    @Column(name = "Name", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "publisher")
