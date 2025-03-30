@@ -12,59 +12,6 @@
 </head>
 <body class="bg-light">
     <div th:replace="~{/layout/header.html}"></div>
-    <div class="container">
-
-        <!-- Nút Toggle trên mobile -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Nội dung Navbar -->
-        <div class="collapse navbar-collapse" id="navbarContent">
-            <!-- Thanh tìm kiếm -->
-            <form class="d-flex mx-auto" role="search">
-                <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..."
-                    aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Tìm</button>
-            </form>
-
-            <!-- Giỏ hàng & Tài khoản -->
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-cart3"></i> Giỏ hàng
-                    </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i> Tài khoản
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="login"><i class="fa-solid fa-right-to-bracket"></i>
-                                Đăng
-                                nhập</a></li>
-
-                        <li><a class="dropdown-item" href="signin"><i class="fa-solid fa-user-plus"></i> Đăng
-                                ký</a>
-                        </li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-key"></i> Đổi mật
-                                khẩu</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-lock"></i> Quên mật
-                                khẩu</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-pen"></i> Cập nhật
-                                thông tin</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="logout"><i class="fa-solid fa-right-from-bracket"></i>
-                                Đăng xuất</a></li>
-                    </ul>
-
-                </li>
-            </ul>
-        </div>
-    </div>
     <div class="container py-5">
         <h1 class="mb-4">Thông tin đơn hàng</h1>
         
@@ -76,15 +23,20 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="mb-1"><strong>Họ tên:</strong> Nguyễn Văn A</p>
-                        <p class="mb-1"><strong>Điện thoại:</strong> 0912 345 678</p>
+                        <label for="fullname"><strong>Họ tên:</strong></label>
+                        <input type="text" id="fullname" class="form-control mb-2" value="Nguyễn Văn A">
+                        
+                        <label for="phone"><strong>Điện thoại:</strong></label>
+                        <input type="text" id="phone" class="form-control mb-2" value="0912 345 678">
                     </div>
                     <div class="col-md-6">
-                        <p class="mb-1"><strong>Địa chỉ:</strong> Số 1, đường ABC, phường XYZ, quận 1, TP.HCM</p>
+                        <label for="address"><strong>Địa chỉ:</strong></label>
+                        <input type="text" id="address" class="form-control mb-2" value="Số 1, đường ABC, phường XYZ, quận 1, TP.HCM">
                     </div>
                 </div>
             </div>
         </div>
+        
 
         <!-- Danh sách sản phẩm -->
         <div class="card mb-4">
@@ -114,19 +66,6 @@
                                 </div>
                             </td>
                             <td id="total-product1" class="total-price">25.000.000₫</td>
-                        </tr>
-                        <tr>
-                            <td>AirPods Pro 2</td>
-                            <td data-price="5500000">5.500.000₫</td>
-                            <td>
-                                <div class="d-flex gap-1 align-items-center">
-                                    <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity('product2', -1)">-</button>
-                                    <input type="number" id="product2" class="form-control quantity-input" value="2" min="1" 
-                                           data-price="5500000" onchange="calculateTotal('product2')">
-                                    <button class="btn btn-sm btn-outline-secondary" onclick="updateQuantity('product2', 1)">+</button>
-                                </div>
-                            </td>
-                            <td id="total-product2" class="total-price">11.000.000₫</td>
                         </tr>
                     </tbody>
                 </table>
