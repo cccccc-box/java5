@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import net.bookstores.assignment.dao.UserDao;
 import net.bookstores.assignment.entities.User;
@@ -30,7 +32,8 @@ public class LogInController {
     }
 
     @PostMapping("/login/check")
-    public String checkUser(Model model, RedirectAttributes redirectAttributes, @RequestParam("email") String email,
+    public String checkUser(Model model, HttpServletResponse response, RedirectAttributes redirectAttributes,
+            @RequestParam("email") String email,
             @RequestParam("password") String password,
             HttpSession session) {
         User user = userDao.findByEmail(email);
@@ -50,7 +53,11 @@ public class LogInController {
             return "redirect:/login";
         }
 
-        session.setAttribute("user", user);
+        Cookie cookie = new Cookie("user", user.getUserId().toString());
+        cookie.setMaxAge(7 * 24 * 60 * 60); // 7 ngày
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
 
         String securityUri = (String) session.getAttribute("securityUri");
         if (securityUri != null) {

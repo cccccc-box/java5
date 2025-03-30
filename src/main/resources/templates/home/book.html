@@ -53,34 +53,12 @@
                         <button class="btn btn-success btn-lg">
                             <i class="bi bi-cart"></i> Thêm vào giỏ hàng
                         </button>
-                        <button class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <form action="/buy" method="get">
+                            <input hidden name="bookId" th:value="${book.bookId}">
+                        <button type="submit" class="btn btn-danger btn-lg">
                             <i class="bi bi-credit-card"></i> Mua ngay
                         </button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="staticBackdropLabel">Xác nhận mua hàng</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="fw-bold text-primary">Bạn muốn mua cuốn sách này hả?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Hủy</button>
-                                        <form action="/buy" method="post">
-                                            <input hidden name="bookId" th:value="${book.bookId}">
-                                            <button type="submit" class="btn btn-primary">Mua</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    </form>
                     </div>
 
                     <!-- Mô tả -->

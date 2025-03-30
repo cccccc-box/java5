@@ -1,13 +1,105 @@
-<div class="sidebar">
-    <h2>Dashboard</h2>
-    <ul>
-        <li><a href="/"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
-        <li><a href="/admin/user/index"><i class="fa-solid fa-user"></i> Tài khoản</a></li>
-        <li><a href="/admin/publisher/index"><i class="fa-solid fa-building"></i> Nhà xuất bản</a></li>
-        <li><a href="/admin/author/index"><i class="fa-solid fa-pen-nib"></i> Tác giả</a></li>
-        <li><a href="/admin/category/index"><i class="fa-solid fa-layer-group"></i> Thể loại</a></li>
-        <li><a href="/admin/book/index"><i class="fa-solid fa-book"></i> Sách</a></li>
-        <li><a href="/admin/statistic/index"><i class="fa-solid fa-chart-bar"></i> Thống kê</a></li>
-        <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
+<div class="sidebar bg-dark text-white vh-100 d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
+    <!-- Brand -->
+    <div class="d-flex align-items-center mb-4 border-bottom pb-3">
+        <i class="fa-solid fa-chart-line fs-4 me-2"></i>
+        <span class="fs-5 fw-semibold">Trang Quản Trị</span>
+    </div>
+
+    <!-- Menu Items -->
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="/" class="nav-link text-white">
+                <i class="fa-solid fa-house me-2"></i>
+                Trang chủ
+                <i class="fa-solid fa-chevron-right ms-auto"></i>
+            </a>
+        </li>
+        
+        <li class="nav-item">
+            <a href="/admin/user/index" class="nav-link text-white">
+                <i class="fa-solid fa-user-gear me-2"></i>
+                Tài khoản
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/admin/book/index" class="nav-link text-white">
+                <i class="fa-solid fa-book-open me-2"></i>
+                Sách
+            </a>
+        </li>
+
+        <!-- Dropdown - Danh mục về sách -->
+        <li class="nav-item dropdown">
+            <a class="nav-link text-white dropdown-toggle" href="#" role="button" 
+            data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-folder-tree me-2"></i>
+                Danh mục về sách
+            </a>
+            <ul class="dropdown-menu bg-dark-subtle">
+                <li>
+                    <a href="/admin/publisher/index" class="dropdown-item text-dark">
+                        <i class="fa-solid fa-city me-2"></i>
+                        Nhà xuất bản
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/author/index" class="dropdown-item text-dark">
+                        <i class="fa-solid fa-feather me-2"></i>
+                        Tác giả
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/category/index" class="dropdown-item text-dark">
+                        <i class="fa-solid fa-tags me-2"></i>
+                        Thể loại
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <!-- Dropdown - Danh mục khác -->
+        <li class="nav-item dropdown">
+            <a class="nav-link text-white dropdown-toggle" href="#" role="button" 
+            data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-folder-tree me-2"></i>
+                Danh mục khác
+            </a>
+            <ul class="dropdown-menu bg-dark-subtle">
+                <li>
+                    <a class="dropdown-item text-dark" href="/admin/shippingprovider/index">
+                        <i class="fa-solid fa-truck me-2"></i>
+                        Đơn vị vận chuyển
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item text-dark" href="#">
+                        <i class="fa-solid fa-star-half-stroke me-2"></i>
+                        Đánh giá sản phẩm
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item text-dark" href="#">
+                        <i class="fa-solid fa-tag me-2"></i>
+                        Mã giảm giá
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item">
+            <a href="/admin/statistic/index" class="nav-link text-white">
+                <i class="fa-solid fa-chart-pie me-2"></i>
+                Thống kê
+            </a>
+        </li>
+
     </ul>
+
+    <!-- Footer -->
+    <div class="border-top pt-3">
+        <a href="/logout" class="btn btn-danger w-100">
+            <i class="fa-solid fa-power-off me-2"></i>
+            Đăng xuất
+        </a>
+    </div>
 </div>

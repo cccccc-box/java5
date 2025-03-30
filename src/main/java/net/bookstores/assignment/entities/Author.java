@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class Author {
     @Column(name = "AuthorID")
     private Integer authorId;
 
+    @NotBlank(message = "Tên tác giả không được để trống")
     @Column(name = "Name", nullable = false)
     private String name;
 

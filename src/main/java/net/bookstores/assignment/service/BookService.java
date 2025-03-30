@@ -18,4 +18,9 @@ public class BookService {
         return book.get();
     }
 
+    public Book findById(Integer id) {
+        Optional<Book> book = bookDao.findById(id);
+        return book.get();
+    }
+
 }

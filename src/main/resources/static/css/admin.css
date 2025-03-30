@@ -1,50 +1,214 @@
+/* ========== BASE STYLES ========== */
 body {
     display: flex;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
+/* ========== SIDEBAR LAYOUT ========== */
 .sidebar {
-    min-width: 250px;
-    background-color: #343a40;
-    color: white;
-    padding: 20px;
+    width: 280px;
+    height: 100vh;
+    background: #2c3e50;
+    color: #ecf0f1;
     position: fixed;
     left: 0;
     top: 0;
-    bottom: 0;
+    overflow-y: auto;
+    box-shadow: 3px 0 15px rgba(0,0,0,0.1);
+    z-index: 1030;
+    padding: 20px 0;
 }
 
-.sidebar h2 {
-    text-align: center;
-    margin-bottom: 20px;
+.sidebar-brand {
+    padding: 0 20px 20px;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #34495e;
+    margin-bottom: 15px;
 }
 
-.sidebar ul {
-    list-style-type: none;
-    padding: 0;
+.sidebar-brand i {
+    color: #3498db;
+    margin-right: 10px;
 }
 
-.sidebar ul li {
-    margin: 15px 0;
-}
-
-.sidebar ul li a {
-    color: white;
+/* ========== NAV ITEMS ========== */
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #bdc3c7 !important;
     text-decoration: none;
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background 0.3s;
+    border-radius: 8px;
+    margin: 5px 15px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
 }
 
-.sidebar ul li a:hover {
-    background-color: #495057;
+.nav-link:hover,
+.nav-link.active {
+    background: rgba(255,255,255,0.05);
+    color: #fff !important;
+    transform: translateX(8px);
 }
 
+.nav-link i {
+    width: 25px;
+    font-size: 1.1rem;
+    margin-right: 15px;
+}
+
+/* ========== DROPDOWN MENU ========== */
+.dropdown-menu {
+    background: #34495e;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin: 5px 0;
+}
+
+.dropdown-item {
+    color: #bdc3c7;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background: #3a506b;
+    color: #fff;
+}
+
+.dropdown-toggle::after {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.show .dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+/* ========== MAIN CONTENT ========== */
 .content {
-    margin-left: 250px;
-    /* Để tránh bị đè lên bởi sidebar */
-    padding: 20px;
+    margin-left: 280px;
+    padding: 30px;
     flex-grow: 1;
-    background-color: #f8f9fa;
     min-height: 100vh;
+    transition: margin-left 0.3s;
+}
+
+.content h1 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ========== TABLE STYLES ========== */
+.table-hover tbody tr:hover {
+    background-color: rgba(52, 58, 64, 0.05);
+}
+
+.table th {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* ========== BUTTONS ========== */
+.btn-warning {
+    background: #f39c12;
+    border-color: #f39c12;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+/* ========== MODAL CUSTOMIZATION ========== */
+.modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: #2c3e50;
+    color: white;
+    border-bottom: none;
+}
+
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+}
+
+/* ========== BADGES ========== */
+.badge {
+    font-weight: 500;
+    padding: 5px 10px;
+    margin-left: auto;
+}
+
+.badge.bg-danger {
+    background: #e74c3c !important;
+}
+
+.badge.bg-success {
+    background: #2ecc71 !important;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        box-shadow: none;
+    }
+    
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    
+    .nav-link {
+        margin: 5px 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content {
+        padding: 15px;
+    }
+    
+    .table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* ========== UTILITY CLASSES ========== */
+.text-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.8);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

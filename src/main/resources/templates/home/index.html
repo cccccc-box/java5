@@ -14,75 +14,17 @@
 </head>
 
 <body>
-    <div class="container-fluid p-0">
+    <div class="container-fluid">
         <img src="/image/header_1263x60.webp" alt="" width="100%">
         <!-- NAVBAR -->
         <div th:replace="~{/layout/header.html}"></div>
-        <div class="container">
-
-            <!-- Nút Toggle trên mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Nội dung Navbar -->
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <!-- Thanh tìm kiếm -->
-                <form class="d-flex mx-auto" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Tìm kiếm sản phẩm..."
-                        aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">Tìm</button>
-                </form>
-
-                <!-- Giỏ hàng & Tài khoản -->
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-cart3"></i> Giỏ hàng
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle"></i> Tài khoản
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="login"><i class="fa-solid fa-right-to-bracket"></i>
-                                    Đăng
-                                    nhập</a></li>
-
-                            <li><a class="dropdown-item" href="signin"><i class="fa-solid fa-user-plus"></i> Đăng
-                                    ký</a>
-                            </li>
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-key"></i> Đổi mật
-                                    khẩu</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-lock"></i> Quên mật
-                                    khẩu</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-pen"></i> Cập nhật
-                                    thông tin</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="logout"><i class="fa-solid fa-right-from-bracket"></i>
-                                    Đăng xuất</a></li>
-                        </ul>
-
-                    </li>
-                </ul>
-            </div>
-        </div>
-        </nav>
         <div class="row p-4">
-            <div id="carouselExampleIndicators" class="carousel slide">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                        class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
-                        aria-label="Slide 4"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -98,17 +40,15 @@
                         <img src="/image/slide/viathantai_840x320.webp" class="d-block w-100" alt="...">
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
                 </button>
-            </div>
+              </div>
         </div>
         <div class="container mt-4">
             <h2 class="text-center text-danger mb-4">5 Quyển Sách Mới Nhất</h2>
