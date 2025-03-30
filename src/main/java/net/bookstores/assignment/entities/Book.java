@@ -74,15 +74,15 @@ public class Book {
     @Column(name = "ImagePath", length = 500)
     private String imagePath;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "book")
     private List<Cart> carts;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "book")
     private List<Favorite> favorites;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "book")
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "book")
     private List<Order> orders;
 }
