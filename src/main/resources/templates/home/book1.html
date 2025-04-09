@@ -13,12 +13,11 @@
   <style>
     .ai-container {
       position: relative;
-      padding-bottom: 100px; /* Tạo khoảng trống cho nút AI */
     }
 
     #aiChatPopup {
       display: none;
-      position: fixed;
+      position: absolute;
       bottom: 100px;
       right: 20px;
       width: 350px;
@@ -43,7 +42,7 @@
 
     #aiChatPopupBody {
       padding: 15px;
-      height: 250px;
+      height: 350px;
       overflow-y: auto;
       background-color: #f9f9f9;
     }
@@ -85,6 +84,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      z-index: 998;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
@@ -161,26 +161,24 @@
         </div>
       </div>
 
-      <!-- Icon mở chatbot - Nằm trong layout -->
-      <div class="d-flex justify-content-end mt-4">
-        <button id="aiIconBtn" class="position-static">
-          <i class="fas fa-robot"></i>
-        </button>
-      </div>
-    </div>
+      <!-- Icon mở chatbot -->
+      <button id="aiIconBtn">
+        <i class="fas fa-robot"></i>
+      </button>
 
-    <!-- Popup chatbot -->
-    <div id="aiChatPopup">
-      <div id="aiChatPopupHeader">
-        VBook AI
-        <button type="button" class="btn-close btn-close-white" id="closeAiChat" aria-label="Đóng"></button>
-      </div>
-      <div id="aiChatPopupBody" class="d-flex flex-column gap-2">
-        <!-- Tin nhắn sẽ được thêm vào đây -->
-      </div>
-      <div id="aiChatPopupFooter">
-        <input type="text" id="aiUserInput" placeholder="Nhập nội dung..." />
-        <button id="aiSendBtn">Gửi</button>
+      <!-- Popup chatbot -->
+      <div id="aiChatPopup">
+        <div id="aiChatPopupHeader">
+          VBook AI
+          <button type="button" class="btn-close btn-close-white" id="closeAiChat" aria-label="Đóng"></button>
+        </div>
+        <div id="aiChatPopupBody" class="d-flex flex-column gap-2">
+          <!-- Tin nhắn sẽ được thêm vào đây -->
+        </div>
+        <div id="aiChatPopupFooter">
+          <input type="text" id="aiUserInput" placeholder="Nhập nội dung..." />
+          <button id="aiSendBtn">Gửi</button>
+        </div>
       </div>
     </div>
 
