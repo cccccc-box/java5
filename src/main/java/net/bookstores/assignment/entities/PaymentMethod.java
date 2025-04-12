@@ -1,12 +1,13 @@
 package net.bookstores.assignment.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,22 +15,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Favorites")
+@Table(name = "PaymentMethods")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Favorite {
+public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "FavoriteID")
-    private Integer favoriteId;
+    @Column(name = "PaymentMethodID")
+    private Integer paymentMethodID;
 
-    @ManyToOne
-    @JoinColumn(name = "UserID")
-    private User user;
+    @Column(name = "MethodName", nullable = false, unique = true)
+    private String methodName;
 
-    @ManyToOne
-    @JoinColumn(name = "BookID")
-    private Book book;
+    @Column(name = "Active")
+    private Boolean active;
+
+    @Column(name = "Description")
+    private String description;
+
+    @OneToMany(mappedBy = "paymentMethod")
+    private List<Order> orders;
 }

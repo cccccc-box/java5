@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -27,6 +28,10 @@ public class Review {
     private Integer reviewId;
 
     @ManyToOne
+    @JoinColumn(name = "OrderID")
+    private Order order;
+
+    @ManyToOne
     @JoinColumn(name = "UserID")
     private User user;
 
@@ -35,6 +40,7 @@ public class Review {
     private Book book;
 
     @Min(value = 1, message = "Đánh giá phải từ 1 đến 5")
+    @Max(value = 5, message = "Đánh giá phải từ 1 đến 5")
     @Column(name = "Rating")
     private Integer rating;
 
@@ -45,6 +51,6 @@ public class Review {
     @Column(name = "Comment")
     private String comment;
 
-    @Column(name = "CreatedAt")
+    @Column(name = "CreateAt")
     private Date createAt;
 }
