@@ -127,7 +127,7 @@
 
         <!-- Thông tin sách -->
         <div class="col-md-8">
-          <h2 class="fw-bold text-primary" th:text="${book.title}"></h2>
+          <h2 class="fw-bold text-primary" th:text="${book.title}"></h2> <span title="Thêm vào mục yêu thích"><i class="bi bi-heart"></i></span>
           <p class="text-muted">Thể loại: <span class="fw-bold" th:text="${book.category.name}"></span></p>
           <p class="text-muted">Tác giả: <span class="fw-bold" th:text="${book.author.name}"></span></p>
           <p class="text-muted">Nhà xuất bản: <span class="fw-bold" th:text="${book.publisher.name}"></span></p>
@@ -147,12 +147,11 @@
             <button class="btn btn-success btn-lg">
               <i class="bi bi-cart"></i> Thêm vào giỏ hàng
             </button>
-            <form action="/buy" method="get">
-              <input hidden name="bookId" th:value="${book.bookId}">
-              <button type="submit" class="btn btn-danger btn-lg">
+            <button class="btn btn-danger btn-lg">
+              <a th:href="@{|/buy/${book.bookId}|}" class="text-white text-decoration-none">
                 <i class="bi bi-credit-card"></i> Mua ngay
-              </button>
-            </form>
+              </a>
+            </button>
           </div>
 
           <!-- Mô tả -->

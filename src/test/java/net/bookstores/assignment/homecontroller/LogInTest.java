@@ -224,8 +224,8 @@ public class LogInTest {
             e.getStackTrace();
         }
         String currentURL = driver.getCurrentUrl();
-        String expectedURL = "http://localhost:8080/login2";
-        Assert.assertEquals(expectedURL, currentURL, "Đăng nhập không thành công");
+        String expectedURL = "http://localhost:8080/login";
+        Assert.assertEquals(expectedURL, currentURL, "Đăng nhập thành công");
     }
 
     @AfterClass

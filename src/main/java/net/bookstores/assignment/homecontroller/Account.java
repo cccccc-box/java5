@@ -4,20 +4,20 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.server.ResponseStatusException;
 import jakarta.servlet.http.HttpSession;
 import net.bookstores.assignment.dao.OrderDao;
 import net.bookstores.assignment.dao.UserDao;
 import net.bookstores.assignment.entities.Order;
 import net.bookstores.assignment.entities.User;
+import net.bookstores.assignment.service.AuthService;
 import net.bookstores.assignment.service.UserService;
 
 @Controller
@@ -30,20 +30,25 @@ public class Account {
     UserService userService;
 
     @Autowired
+    private AuthService authService;
+
+    @Autowired
     OrderDao orderDao;
     @Autowired
     HttpSession session;
 
     @GetMapping("/index")
     public String trangCaNhanh(Model model) {
-        User user = userService.readCookie().get();
+        User user = authService.getCurrentUser()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Vui lòng đăng nhập"));
         model.addAttribute("user", user);
         return "home/account";
     }
 
     @GetMapping("/edit")
     public String chinhSuaThongTin(Model model) {
-        User user = userService.readCookie().get();
+        User user = authService.getCurrentUser()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Vui lòng đăng nhập"));
         model.addAttribute("user", user);
         return "home/editprofile";
     }

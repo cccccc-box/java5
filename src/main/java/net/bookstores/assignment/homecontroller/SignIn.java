@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.bookstores.assignment.dao.UserDao;
 import net.bookstores.assignment.entities.User;
+import net.bookstores.assignment.service.PendingAccountService;
 import net.bookstores.assignment.util.MailService;
 
 @Controller
@@ -18,6 +19,9 @@ public class SignIn {
 
     @Autowired
     MailService mailService;
+
+    @Autowired
+    private PendingAccountService pendingAccountService;
 
     @GetMapping("/signin")
     public String signIn() {
@@ -33,17 +37,21 @@ public class SignIn {
                     .active(false).build();
             userDao.save(user);
 
-            String a = "<a href=\"http://localhost:8080/xacthuctaikhoan?email=" + user.getEmail()
-                    + "\">Nhấn vào đây để xác thực</a>";
-            String toEmail = user.getEmail();
-            String emailBody = "Chúc mừng bạn đã đăng ký tài khoản thành công! " + a;
-            mailService.send(toEmail, "Xác thực tài khoản Vbooks.net", emailBody);
+            // Tạo tài khoản chờ xác thực
+            String verificationCode = pendingAccountService.createPendingAccount(user);
+
+            // Gửi email xác thực
+            String verificationLink = "http://localhost:8080/xacthuctaikhoan?code=" + verificationCode;
+            String emailBody = "Vui lòng nhấn vào link sau để xác thực tài khoản (hiệu lực trong 15 phút): " +
+                    "<a href=\"" + verificationLink + "\">Xác thực tài khoản</a>";
+
+            mailService.send(email, "Xác thực tài khoản Vbooks.net", emailBody);
 
         } catch (Exception e) {
-            return "<script>alert('Đăng ký thất bại: " + e.getMessage() + "');"
-                    + "window.history.back();</script>";
+            return "<script>alert('Đăng ký thất bại: " + e.getMessage() + "');" +
+                    "window.history.back();</script>";
         }
-        return "<script>alert('Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.');"
-                + "window.location.href='/login';</script>";
+        return "<script>alert('Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.');" +
+                "window.location.href='/login';</script>";
     }
 }

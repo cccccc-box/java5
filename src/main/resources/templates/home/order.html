@@ -1,65 +1,176 @@
-<!doctype html>
-<html lang="vi">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Tìm sách - VBooks</title>
-    <link rel="icon" type="image/png" sizes="16x16" href="../../static/image/favicon/favicon-32x32.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
-    <div class="container-fluid p-0">
-
-        <!-- NAVBAR -->
-        <div th:replace="~{/layout/header.html}"></div>
-
-        <!-- Danh sách sau khi tìm -->
-        <div class="container mt-5">
-            <h2 class="mb-3">Orders List</h2>
-            <table class="table table-striped table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Order ID</th>
-                        <th>User ID</th>
-                        <th>Book ID</th>
-                        <th>Price</th>
-                        <th>Amount</th>
-                        <th>Discount %</th>
-                        <th>Discounted Price</th>
-                        <th>Address</th>
-                        <th>Create Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <th:block th:each=" : ${orders}">
-                        <tr>
-                            <td th:text="${order.orderId}"></td>
-                            <td th:text="${order.user.userId}"></td>
-                            <td th:text="${order.book.bookId}"></td>
-                            <td th:text="${order.price}">$20.00</td>
-                            <td th:text="${order.amount}">2</td>
-                            <td th:text="${order.discountPercentage}">10%</td>
-                            <td th:text="${order.discountedPrice}">$18.00</td>
-                            <td th:text="${order.address}">123 Main St</td>
-                            <td th:text="${order.createDate}">2024-03-04</td>
-                        </tr>
-                    </th:block>
-                </tbody>
-            </table>
+    <div th:replace="~{/layout/header.html}"></div>
+    <div class="container mt-5">
+        <div class="container-fluid py-4">
+            <h1 class="mb-4"><i class="fas fa-clipboard-list me-2"></i>Theo dõi đơn hàng</h1>
+            <!-- Tab Navigation -->
+            <ul class="nav nav-tabs mb-4" id="ordersTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">
+                        <i class="fas fa-clock me-1"></i> Chờ xác nhận
+                        <span class="badge bg-warning ms-2" th:text="${listCXN.size()}"></span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="shipping-tab" data-bs-toggle="tab" data-bs-target="#shipping" type="button" role="tab" aria-controls="shipping" aria-selected="false">
+                        <i class="fas fa-truck me-1"></i> Đang giao
+                        <span class="badge bg-primary ms-2" th:text="${listDGH.size()}"></span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="delivered-tab" data-bs-toggle="tab" data-bs-target="#delivered" type="button" role="tab" aria-controls="delivered" aria-selected="false">
+                        <i class="fas fa-check-circle me-1"></i> Đã giao
+                        <span class="badge bg-success ms-2" th:text="${listDG.size()}"></span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled" type="button" role="tab" aria-controls="cancelled" aria-selected="false">
+                        <i class="fas fa-ban me-1"></i> Đã hủy
+                        <span class="badge bg-danger ms-2" th:text="${listHD.size()}"></span>
+                    </button>
+                </li>
+            </ul>
+        
+            <!-- Tab Content -->
+            <div class="tab-content" id="ordersTabContent">
+                <!-- Tab Chờ xác nhận -->
+                <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4" th:each="item : ${listCXN}" th:object="${item}">
+                            <div class="card border-start border-warning border-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="card-title mb-0" th:text="'Mã đơn hàng:'+*{orderId}"></h5>
+                                        <span class="badge bg-warning">Chờ xác nhận</span>
+                                    </div>
+                                    <p class="card-text mb-1"><i class="fas fa-user me-2"></i>[[*{recipientName}]]</p>
+                                    <p class="card-text mb-1"><i class="fas fa-phone me-2"></i>[[*{phone}]]</p>
+                                    <p class="card-text mb-1"><i class="fas fa-money-bill-wave me-2"></i>[[*{#numbers.formatInteger(totalAmount, 0, 'COMMA')}]] đ</p>
+                                    <p class="card-text mb-3"><i class="fas fa-calendar-alt me-2"></i>[[*{orderDate}]]</p>
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <button class="btn btn-sm btn-outline-primary" title="Xem chi tiết">
+                                            <a th:href="@{|/account/orders/*{orderId}|}" class="text-decoration-none">
+                                                <i class="fas fa-eye"></i>
+                                              </a>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" title="Hủy đơn">
+                                            <a th:href="@{|/account/orders/cancel/*{orderId}|}" class="text-decoration-none">
+                                                <i class="fas fa-times"></i>
+                                              </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Tab Đang giao -->
+                <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4" th:each="item : ${listDGH}" th:object="${item}">
+                            <div class="card border-start border-primary border-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="card-title mb-0" th:text="'Mã đơn hàng:'+*{orderId}"></h5>
+                                        <span class="badge bg-primary">Đang giao</span>
+                                    </div>
+                                    <p class="card-text mb-1"><i class="fas fa-user me-2"></i>[[*{recipientName}]]</p>
+                                    <p class="card-text mb-1"><i class="fas fa-phone me-2"></i>[[*{phone}]]</p>
+                                    <p class="card-text mb-1"><i class="fas fa-money-bill-wave me-2"></i>[[*{#numbers.formatInteger(totalAmount, 0, 'COMMA')}]] đ</p>
+                                    <p class="card-text mb-3"><i class="fas fa-truck me-2"></i>[[*{shippingProvider.name}]]</p>
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <button class="btn btn-sm btn-outline-primary" title="Xem chi tiết">
+                                            <a th:href="@{|/account/orders/*{orderId}|}" class="text-decoration-none">
+                                                <i class="fas fa-eye"></i>
+                                              </a>
+                                        </button>
+                                        <button class="btn btn-sm btn-success" title="Đã nhận hàng">
+                                            <a th:href="@{|/account/orders/delivered/*{orderId}|}" class="text-decoration-none">
+                                                <i class="fas fa-check"></i>
+                                              </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Tab Đã giao -->
+                <div class="tab-pane fade" id="delivered" role="tabpanel" aria-labelledby="delivered-tab">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4" th:each="item : ${listDG}" th:object="${item}">
+                            <div class="card border-start border-success border-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="card-title mb-0" th:text="'Mã đơn hàng:'+*{orderId}"></h5>
+                                        <span class="badge bg-success">Đã giao</span>
+                                    </div>
+                                    <p class="card-text mb-1"><i class="fas fa-user me-2"></i>[[*{recipientName}]]</p>
+                                    <p class="card-text mb-1"><i class="fas fa-phone me-2"></i>[[*{phone}]]</p>
+                                    <p class="card-text mb-1"><i class="fas fa-money-bill-wave me-2"></i>[[*{#numbers.formatInteger(totalAmount, 0, 'COMMA')}]] đ</p>
+                                    <p class="card-text mb-3"><i class="fas fa-truck me-2"></i>[[*{shippingProvider.name}]]</p>
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <button class="btn btn-sm btn-outline-warning" title="Đánh giá">
+                                            <a href="#" class="text-decoration-none">
+                                                <i class="bi bi-star-half"></i>
+                                            </a>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-primary" title="Xem chi tiết">
+                                            <a th:href="@{|/account/orders/*{orderId}|}" class="text-decoration-none">
+                                                <i class="fas fa-eye"></i>
+                                              </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Tab Đã hủy -->
+                <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4" th:each="item : ${listHD}" th:object="${item}">
+                            <div class="card border-start border-danger border-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="card-title mb-0" th:text="'Mã đơn hàng:'+*{orderId}"></h5>
+                                        <span class="badge bg-danger">Đã hủy</span>
+                                    </div>
+                                    <p class="card-text mb-1"><i class="fas fa-user me-2"></i>[[*{recipientName}]]</p>
+                                    <p class="card-text mb-1"><i class="fas fa-phone me-2"></i>[[*{phone}]]</p>
+                                    <p class="card-text mb-1"><i class="fas fa-money-bill-wave me-2"></i>[[*{#numbers.formatInteger(totalAmount, 0, 'COMMA')}]] đ</p>
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <button class="btn btn-sm btn-outline-primary" title="Xem chi tiết">
+                                            <a th:href="@{|/account/orders/*{orderId}|}" class="text-decoration-none">
+                                                <i class="fas fa-eye"></i>
+                                              </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-        <!-- FOOTER -->
-        <div th:replace="~{/layout/footer.html}"></div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <div th:replace="~{/layout/footer.html}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </body>
 
 </html>

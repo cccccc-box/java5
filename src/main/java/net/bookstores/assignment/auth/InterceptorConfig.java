@@ -13,8 +13,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/admin/user/**", "/admin/publisher/**", "/admin/author/**",
-                        "/admin/category/**", "/admin/book/**", "/changepassword", "/account/**", "/buy/**")
+                .addPathPatterns("/admin/**", "/changepassword", "/account/**", "/buy/**")
                 .excludePathPatterns("/login");
         WebMvcConfigurer.super.addInterceptors(registry);
     }

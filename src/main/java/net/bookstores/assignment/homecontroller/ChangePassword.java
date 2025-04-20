@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpSession;
 import net.bookstores.assignment.dao.UserDao;
 import net.bookstores.assignment.entities.User;
+import net.bookstores.assignment.service.AuthService;
 
 @Controller
 public class ChangePassword {
@@ -22,9 +23,12 @@ public class ChangePassword {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    AuthService authService;
+
     @GetMapping("/changepassword")
     public String changePassword(Model model) {
-        User user = (User) session.getAttribute("user");
+        User user = authService.getCurrentUser().get();
         model.addAttribute("userId", user.getUserId());
         return "home/ChangePassword";
     }

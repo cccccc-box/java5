@@ -4,22 +4,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import net.bookstores.assignment.dao.UserDao;
-import net.bookstores.assignment.entities.User;
+import net.bookstores.assignment.service.PendingAccountService;
 
 @Controller
 public class AccountAuth {
     @Autowired
-    UserDao userDao;
+    private PendingAccountService pendingAccountService;
 
+    @ResponseBody
     @GetMapping("/xacthuctaikhoan")
-    public String xacThucTaiKhoan(@RequestParam("email") String email) {
-        User user = userDao.findByEmail(email);
-        User userA = User.builder().userId(user.getUserId()).fullName(user.getFullName()).email(user.getEmail())
-                .password(user.getPassword()).phone(user.getPhone()).address(user.getAddress())
-                .role(false).active(true).build();
-        userDao.save(userA);
-        return "redirect:/login";
+    public String xacThucTaiKhoan(@RequestParam("code") String verificationCode) {
+        if (pendingAccountService.verifyAccount(verificationCode)) {
+            return "<script>alert('Xác thực thành công! Bây giờ bạn đã có thể đăng nhập và mua hàng.');" +
+                    "window.location.href='/login';</script>";
+        } else {
+            return "<script>alert('Xác thực không thành công! Bạn vui lòng đăng ký lại tài khoản.');" +
+                    "window.location.href='/signin';</script>";
+        }
     }
 }

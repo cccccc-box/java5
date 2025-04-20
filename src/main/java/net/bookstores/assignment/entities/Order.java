@@ -13,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,6 +45,7 @@ public class Order {
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
     private User user;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "OrderDate")
     private Date orderDate;
 

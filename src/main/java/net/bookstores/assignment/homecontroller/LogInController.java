@@ -7,17 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import net.bookstores.assignment.dao.UserDao;
 import net.bookstores.assignment.entities.User;
+import net.bookstores.assignment.service.AuthService;
 
 @Controller
 public class LogInController {
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    AuthService authService;
 
     @Autowired
     HttpSession session;
@@ -53,15 +55,10 @@ public class LogInController {
             return "redirect:/login";
         }
 
-        Cookie cookie = new Cookie("user", user.getUserId().toString());
-        cookie.setMaxAge(7 * 24 * 60 * 60); // 7 ngày
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        authService.createLoginSession(user, response);
 
         String securityUri = (String) session.getAttribute("securityUri");
         if (securityUri != null) {
-            System.err.println(securityUri);
             return "redirect:" + securityUri;
         } else {
             return user.getRole() ? "redirect:/admin/user/index" : "redirect:/";

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản trị Đơn hàng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div th:replace="~{/admin/layout/sidebar.html}"></div>
+    <div class="content">
+        <div class="container-fluid py-4">
+            <h1 class="mb-4"><i class="fas fa-clipboard-list me-2"></i>Quản lý đơn hàng</h1>
+            
+            <!-- Tab Navigation -->
+            <ul class="nav nav-tabs mb-4" id="ordersTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" 
+                            th:classappend="${activeTab == 0} ? 'active'" 
+                            id="pending-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#pending" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="pending" 
+                            aria-selected="true" 
+                            style="background-color: transparent; color: inherit;">
+                        <i class="fas fa-clock me-1"></i> Chờ xác nhận
+                        <span class="badge bg-warning ms-2" th:text="${listCXN.size()}"></span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" 
+                            th:classappend="${activeTab == 1} ? 'active'" 
+                            id="shipping-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#shipping" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="shipping" 
+                            aria-selected="false">
+                        <i class="fas fa-truck me-1"></i> Đang giao hàng
+                        <span class="badge bg-primary ms-2" th:text="${listDGH.size()}"></span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" 
+                            th:classappend="${activeTab == 2} ? 'active'" 
+                            id="delivered-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#delivered" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="delivered" 
+                            aria-selected="false">
+                        <i class="fas fa-check-circle me-1"></i> Đã giao
+                        <span class="badge bg-success ms-2" th:text="${listDG.size()}"></span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" 
+                            th:classappend="${activeTab == 3} ? 'active'" 
+                            id="cancelled-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#cancelled" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="cancelled" 
+                            aria-selected="false">
+                        <i class="fas fa-ban me-1"></i> Đơn hủy
+                        <span class="badge bg-danger ms-2" th:text="${listHD.size()}"></span>
+                    </button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="ordersTabContent">
+                <!-- Tab Chờ xác nhận -->
+                <div class="tab-pane fade" 
+                     th:classappend="${activeTab == 0} ? 'show active'" 
+                     id="pending" 
+                     role="tabpanel" 
+                     aria-labelledby="pending-tab">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Tìm kiếm đơn hàng chờ xác nhận...">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 mb-4" th:each="item : ${listCXN}" th:object="${item}">
+                            <div class="card border-start border-warning border-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="card-title mb-0" th:text="'Mã đơn hàng:'+*{orderId}"></h5>
+                                        <span class="badge bg-warning">Chờ xác nhận</span>
+                                    </div>
+                                    <p class="card-text mb-1 small"><i class="fas fa-user me-2"></i>[[*{recipientName}]]</p>
+                                    <p class="card-text mb-1 small"><i class="fas fa-phone me-2"></i>[[*{phone}]]</p>
+                                    <p class="card-text mb-1 small"><i class="fas fa-money-bill-wave me-2"></i>[[*{#numbers.formatInteger(totalAmount, 0, 'COMMA')}]] đ</p>
+                                    <p class="card-text mb-2 small"><i class="fas fa-calendar-alt me-2"></i>[[*{orderDate}]]</p>
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-sm btn-outline-secondary me-2" title="In hóa đơn">
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-primary me-2" title="Xem chi tiết">
+                                            <a th:href="@{|/admin/order/detail/*{orderId}|}" class="text-decoration-none">
+                                                <i class="fas fa-eye"></i>
+                                              </a>
+                                        </button>
+                                        <button class="btn btn-sm btn-warning me-2" title="Xác nhận">
+                                            <a th:href="@{|/admin/order/update/1/*{orderId}|}" class="text-white text-decoration-none">
+                                                <i class="fas fa-check"></i>
+                                              </a>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" title="Hủy đơn">
+                                            <a th:href="@{|/admin/order/update/3/*{orderId}|}" class="text-white text-decoration-none">
+                                                <i class="fas fa-times"></i>
+                                              </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Đang giao hàng -->
+                <div class="tab-pane fade" 
+                     th:classappend="${activeTab == 1} ? 'show active'" 
+                     id="shipping" 
+                     role="tabpanel" 
+                     aria-labelledby="shipping-tab">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Tìm kiếm đơn hàng đang giao...">
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Đơn hàng 1 -->
+                        <div class="col-md-6 col-lg-4 mb-4" th:each="item : ${listDGH}" th:object="${item}">
+                            <div class="card border-start border-primary border-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="card-title mb-0" th:text="'Mã đơn hàng:'+*{orderId}"></h5>
+                                        <span class="badge bg-primary">Đang giao</span>
+                                    </div>
+                                    <p class="card-text mb-1 small"><i class="fas fa-user me-2"></i>[[*{recipientName}]]</p>
+                                    <p class="card-text mb-1 small"><i class="fas fa-phone me-2"></i>[[*{phone}]]</p>
+                                    <p class="card-text mb-1 small"><i class="fas fa-money-bill-wave me-2"></i>[[*{#numbers.formatInteger(totalAmount, 0, 'COMMA')}]] đ</p>
+                                    <p class="card-text mb-2 small"><i class="fas fa-truck me-2"></i>[[*{shippingProvider.name}]]</p>
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-sm btn-outline-primary me-2" title="Xem chi tiết">
+                                            <a th:href="@{|/admin/order/detail/*{orderId}|}" class="text-decoration-none">
+                                                <i class="fas fa-eye"></i>
+                                              </a>
+                                        </button>
+                                        <button class="btn btn-sm btn-success me-2" title="Đánh dấu đã giao">
+                                            <a th:href="@{|/admin/order/update/2/*{orderId}|}" class="text-white text-decoration-none">
+                                                <i class="fas fa-check"></i>
+                                              </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Đã giao -->
+                <div class="tab-pane fade" 
+                     th:classappend="${activeTab == 2} ? 'show active'" 
+                     id="delivered" 
+                     role="tabpanel" 
+                     aria-labelledby="delivered-tab">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Tìm kiếm đơn hàng đã giao...">
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Đơn hàng 1 -->
+                        <div class="col-md-6 col-lg-4 mb-4" th:each="item : ${listDG}" th:object="${item}">
+                            <div class="card border-start border-success border-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="card-title mb-0" th:text="'Mã đơn hàng:'+*{orderId}"></h5>
+                                        <span class="badge bg-success">Đã giao</span>
+                                    </div>
+                                    <p class="card-text mb-1 small"><i class="fas fa-user me-2"></i>[[*{recipientName}]]</p>
+                                    <p class="card-text mb-1 small"><i class="fas fa-phone me-2"></i>[[*{phone}]]</p>
+                                    <p class="card-text mb-1 small"><i class="fas fa-money-bill-wave me-2"></i>[[*{#numbers.formatInteger(totalAmount, 0, 'COMMA')}]] đ</p>
+                                    <p class="card-text mb-2 small"><i class="fas fa-truck me-2"></i>[[*{shippingProvider.name}]]</p>
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-sm btn-outline-primary me-2" title="Xem chi tiết">
+                                            <a th:href="@{|/admin/order/detail/*{orderId}|}" class="text-decoration-none">
+                                                <i class="fas fa-eye"></i>
+                                              </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Đơn hủy -->
+                <div class="tab-pane fade" 
+                     th:classappend="${activeTab == 3} ? 'show active'" 
+                     id="cancelled" 
+                     role="tabpanel" 
+                     aria-labelledby="cancelled-tab">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Tìm kiếm đơn hàng đã hủy...">
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Đơn hàng 1 -->
+                        <div class="col-md-6 col-lg-4 mb-4" th:each="item : ${listHD}" th:object="${item}">
+                            <div class="card border-start border-danger border-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="card-title mb-0" th:text="'Mã đơn hàng:'+*{orderId}"></h5>
+                                        <span class="badge bg-danger">Đã hủy</span>
+                                    </div>
+                                    <p class="card-text mb-1 small"><i class="fas fa-user me-2"></i>[[*{recipientName}]]</p>
+                                    <p class="card-text mb-1 small"><i class="fas fa-phone me-2"></i>[[*{phone}]]</p>
+                                    <p class="card-text mb-1 small"><i class="fas fa-money-bill-wave me-2"></i>[[*{#numbers.formatInteger(totalAmount, 0, 'COMMA')}]] đ</p>
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-sm btn-outline-primary me-2" title="Xem chi tiết">
+                                            <a th:href="@{|/admin/order/detail/*{orderId}|}" class="text-decoration-none">
+                                                <i class="fas fa-eye"></i>
+                                              </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript để xử lý tìm kiếm
+        document.querySelectorAll('.input-group input').forEach(input => {
+            input.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const tabPane = this.closest('.tab-pane');
+                const cards = tabPane.querySelectorAll('.card');
+                
+                cards.forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+                });
+            });
+        });
+
+        // Tự động kích hoạt tab nếu có hash trong URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash;
+            if (hash) {
+                const tab = new bootstrap.Tab(document.querySelector(hash + '-tab'));
+                tab.show();
+            }
+        });
+    </script>
+</body>
+</html>

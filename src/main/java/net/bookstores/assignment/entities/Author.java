@@ -2,6 +2,8 @@ package net.bookstores.assignment.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,6 +39,7 @@ public class Author {
     @Column(name = "ImagePath", length = 500)
     private String imagePath;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Book> books;
 }

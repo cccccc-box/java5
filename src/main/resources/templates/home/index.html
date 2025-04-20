@@ -58,7 +58,7 @@
                         <div class="card h-100">
                             <img th:src="@{|/image/book/${item.imagePath}|}" class="card-img-top">
                             <div class="card-body text-center">
-                                <a th:href="@{|/bookdetail?id=${item.bookId}|}"
+                                <a th:href="@{|/bookdetail/${item.bookId}|}"
                                     class="text-decoration-none text-primary fw-bold">
                                     <h5 class="card-title" th:text="${item.title}"></h5>
                                 </a>
@@ -81,14 +81,13 @@
 
             <div class="container mt-4">
                 <h2 class="text-center text-primary mb-4">Gợi Ý Cho Bạn</h2>
-
                 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4">
                     <th:block th:each=" item: ${top10}">
                         <div class=" col">
                             <div class="card h-100">
                                 <img th:src="@{|/image/book/${item.imagePath}|}" class="card-img-top" alt="Sách 1">
                                 <div class="card-body text-center">
-                                    <a th:href="@{|/bookdetail?id=${item.bookId}|}"
+                                    <a th:href="@{|/bookdetail/${item.bookId}|}"
                                         class="text-decoration-none text-primary fw-bold">
                                         <h5 class="card-title" th:text="${item.title}"></h5>
                                     </a>

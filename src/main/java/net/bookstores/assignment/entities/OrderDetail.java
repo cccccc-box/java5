@@ -33,7 +33,7 @@ public class OrderDetail {
     @JoinColumn(name = "BookID")
     private Book book;
 
-    @Column(name = "Qantity")
+    @Column(name = "Quantity")
     private Integer quantity;
 
     @Column(name = "Price")

@@ -26,7 +26,7 @@ public class SecurityTest {
         driver.manage().window().maximize();
     }
 
-    @Test // test đăng xuất
+    @Test // test đăng xuất tài khoản admin
     public void testBM1() {
         driver.get("http://localhost:8080/login");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -54,11 +54,42 @@ public class SecurityTest {
         driver.get("http://localhost:8080/admin/book/index");
         String currentURL = driver.getCurrentUrl();
         String expectedURL = "http://localhost:8080/admin/book/index";
-        Assert.assertNotEquals(expectedURL, currentURL, "Đăng nhập không thành công");
+        Assert.assertNotEquals(expectedURL, currentURL, "Vào được trang admin sau khi đăng xuất");
+    }
+
+    @Test // test đăng xuất khách hàng
+    public void testBM2() {
+        driver.get("http://localhost:8080/login");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[type=submit]")));
+        WebElement email = driver.findElement(By.name("email"));
+        WebElement password = driver.findElement(By.name("password"));
+        WebElement btnLogin = driver.findElement(By.cssSelector("button[type=submit]"));
+
+        email.sendKeys("tranthib@example.com");
+        password.sendKeys("password123");
+        btnLogin.click();
+
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        driver.get("http://localhost:8080/account/index");
+        driver.get("http://localhost:8080/logout");
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        driver.get("http://localhost:8080/account/index");
+        String currentURL = driver.getCurrentUrl();
+        String expectedURL = "http://localhost:8080/account/index";
+        Assert.assertNotEquals(expectedURL, currentURL, "Vào được trang khách hàng sau khi đăng xuất");
     }
 
     @Test // test bảo mật đăng nhập bằng acc khác hàng vào trang web admin
-    public void testBM2() {
+    public void testBM3() {
         driver.get("http://localhost:8080/login");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[type=submit]")));
@@ -84,6 +115,45 @@ public class SecurityTest {
         String currentURL = driver.getCurrentUrl();
         String expectedURL = "http://localhost:8080/admin/book/index";
         Assert.assertNotEquals(expectedURL, currentURL, "Vào được trang admin");
+    }
+
+    @Test // test trang admin khi chưa đăng nhập
+    public void testBM4() {
+        driver.get("http://localhost:8080/admin/book/index");
+        String currentURL = driver.getCurrentUrl();
+        String expectedURL = "http://localhost:8080/admin/book/index";
+        Assert.assertNotEquals(expectedURL, currentURL, "Vào được trang admin sau khi chưa đăng nhập");
+    }
+
+    @Test // test trang khách hàng khi chưa đăng nhập
+    public void testBM5() {
+        driver.get("http://localhost:8080/account/index");
+        String currentURL = driver.getCurrentUrl();
+        String expectedURL = "http://localhost:8080/account/index";
+        Assert.assertNotEquals(expectedURL, currentURL, "Vào được trang khách hàng khi chưa đăng nhập");
+    }
+
+    @Test // test vào trang khách hàng bằng tài khoản admin
+    public void testBM6() {
+        driver.get("http://localhost:8080/login");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[type=submit]")));
+        WebElement email = driver.findElement(By.name("email"));
+        WebElement password = driver.findElement(By.name("password"));
+        WebElement btnLogin = driver.findElement(By.cssSelector("button[type=submit]"));
+
+        email.sendKeys("admin@admin.com");
+        password.sendKeys("admin");
+        btnLogin.click();
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        driver.get("http://localhost:8080/account/index");
+        String currentURL = driver.getCurrentUrl();
+        String expectedURL = "http://localhost:8080/account/index";
+        Assert.assertEquals(expectedURL, currentURL, "Tài khoản admin không vào được trang khách hàng");
     }
 
     @AfterClass
