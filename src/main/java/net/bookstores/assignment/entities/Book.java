@@ -84,5 +84,5 @@ public class Book {
     private List<Review> reviews;
 
     @OneToMany(mappedBy = "book")
-    private List<Order> orders;
+    private List<OrderDetail> orderDetai;
 }

@@ -14,22 +14,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Favorites")
+@Table(name = "OrderDetails")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Favorite {
+public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "FavoriteID")
-    private Integer favoriteId;
+    @Column(name = "OrderDetailID")
+    private Integer orderDetailId;
 
     @ManyToOne
-    @JoinColumn(name = "UserID")
-    private User user;
+    @JoinColumn(name = "OrderID")
+    private Order order;
 
     @ManyToOne
     @JoinColumn(name = "BookID")
     private Book book;
+
+    @Column(name = "Qantity")
+    private Integer quantity;
+
+    @Column(name = "Price")
+    private Float price;
+
+    @Column(name = "DiscountedPrice")
+    private Float discountedPrice;
+
 }

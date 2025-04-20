@@ -1,5 +1,8 @@
 package net.bookstores.assignment.entities;
 
+import java.util.Date;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,40 +30,31 @@ public class Order {
     @Column(name = "OrderId")
     private Integer orderId;
 
+    @Column(name = "RecipientName")
+    private String recipientName;
+
+    @Column(name = "Address")
+    private String address;
+
+    @Column(name = "Phone")
+    private String phone;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserId", referencedColumnName = "UserId")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BookId", referencedColumnName = "BookId")
-    private Book book;
+    @Column(name = "OrderDate")
+    private Date orderDate;
 
-    @Column(name = "Price")
-    private Float price;
+    @Column(name = "TotalMerchandiseValue")
+    private Float totalMerchandiseValue;
 
-    @Column(name = "Amount")
-    private Integer amount;
+    @Column(name = "TotalAmount")
+    private Float totalAmount;
 
-    @Column(name = "DiscountPercentage")
-    private Float discountPercentage;
-
-    @Column(name = "DiscountedPrice")
-    private Float discountedPrice;
-
-    @Column(name = "Address", nullable = false)
-    private String address;
-
-    @Column(name = "Active")
-    private Boolean active;
-
-    @Column(name = "ProviderId")
-    private Integer providerId;
-
-    @Column(name = "DiscountId")
-    private Integer DiscountId;
-
-    @Column(name = "CreateDate")
-    private java.util.Date createDate;
+    @ManyToOne
+    @JoinColumn(name = "PaymentMethodID")
+    private PaymentMethod paymentMethod;
 
     @ManyToOne
     @JoinColumn(name = "ProviderID")
@@ -68,4 +63,14 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "DiscountID")
     private Discount discount;
+
+    @Column(name = "Status")
+    private Integer status;
+
+    @OneToMany(mappedBy = "order")
+    private List<Review> review;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> orderDetail;
+
 }
