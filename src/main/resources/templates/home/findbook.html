@@ -18,6 +18,21 @@
 
         <!-- NAVBAR -->
         <div th:replace="~{/layout/header.html}"></div>
+        <!-- Thanh lọc sắp xếp theo giá -->
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <div class="d-flex align-items-center">
+                        <label for="priceFilter" class="me-2 fw-bold">Sắp xếp theo:</label>
+                        <select class="form-select" id="priceFilter" onchange="handleSortChange()">
+                            <option value="" th:selected="${param.sort == null}">-- Chọn --</option>
+                            <option value="asc" th:selected="${param.sort == 'asc'}">Giá: Thấp đến Cao</option>
+                            <option value="desc" th:selected="${param.sort == 'desc'}">Giá: Cao đến Thấp</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Danh sách sau khi tìm -->
         <div class="container mt-5">
@@ -55,5 +70,21 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script>
+    function handleSortChange() {
+        const select = document.getElementById("priceFilter");
+        const sortValue = select.value;
+
+        const currentUrl = new URL(window.location.href);
+
+        if (sortValue) {
+            currentUrl.searchParams.set("sort", sortValue);
+        } else {
+            currentUrl.searchParams.delete("sort");
+        }
+
+        window.location.href = currentUrl.toString();
+    }
+</script>
 
 </html>
