@@ -56,11 +56,11 @@ public class User {
 
     @Builder.Default
     @Column(name = "Role", nullable = false)
-    private Boolean role = false; // Dùng Boolean vì BIT lưu true/false
+    private Boolean role = false; 
 
     @Builder.Default
     @Column(name = "Active", nullable = true)
-    private Boolean active = true; // Giá trị mặc định là 1 (true)
+    private Boolean active = true; 
 
     @OneToMany(mappedBy = "user")
     private List<Cart> carts;

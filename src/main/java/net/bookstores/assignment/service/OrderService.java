@@ -21,5 +21,7 @@ public class OrderService {
     public Optional<Order> findById(Integer id) {
         return orderDao.findById(id);
     }
-
+    public Order save(Order order) {
+        return orderDao.save(order);
+    }
 }
