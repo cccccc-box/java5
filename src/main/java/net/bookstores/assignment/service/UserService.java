@@ -17,7 +17,7 @@ public class UserService {
     private UserDao userDao;
     @Autowired
     HttpServletRequest request;
-
+    
     public List<User> getAllUsers() {
         return userDao.findAll();
     }
@@ -92,4 +92,5 @@ public class UserService {
     public void deleteUser(Integer id) {
         userDao.deleteById(id);
     }
+
 }

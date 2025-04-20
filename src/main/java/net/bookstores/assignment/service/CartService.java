@@ -7,15 +7,13 @@ import org.springframework.stereotype.Service;
 
 import net.bookstores.assignment.dao.CartDao;
 import net.bookstores.assignment.entities.Cart;
+import net.bookstores.assignment.entities.Book;
+import net.bookstores.assignment.entities.User;
 
 @Service
 public class CartService {
     @Autowired
     private CartDao cartDao;
-
-    public List<Cart> getCartByUserId(Integer userId) {
-        return cartDao.findByUserUserId(userId);
-    }
 
     public Cart updateCartItem(Integer cartId, Integer amount) {
         Cart cart = cartDao.findById(cartId).orElseThrow(() -> new RuntimeException("Cart item not found"));
@@ -25,5 +23,27 @@ public class CartService {
 
     public void deleteCartItem(Integer cartId) {
         cartDao.deleteById(cartId);
+    }
+
+    public void addToCart(User user, Book book, int amount) {
+        Cart cart = Cart.builder()
+                .user(user)
+                .book(book)
+                .amount(amount)
+                .build();
+        cartDao.save(cart);
+    }
+
+    public List<Cart> getCartByUser(User user) {
+        return cartDao.findByUser(user);
+    }
+
+    public void removeCartItem(Integer id) {
+        cartDao.deleteById(id);
+    }
+
+    public void clearCart(User user) {
+        List<Cart> carts = cartDao.findByUser(user);
+        cartDao.deleteAll(carts);
     }
 }

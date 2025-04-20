@@ -1,15 +1,17 @@
 package net.bookstores.assignment.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
+import net.bookstores.assignment.entities.Book;
 import net.bookstores.assignment.entities.Cart;
+import net.bookstores.assignment.entities.User;
 
 public interface CartDao extends JpaRepository<Cart, Integer> {
-    @Query("SELECT c FROM Cart c WHERE c.user.userId = :userId")
-    List<Cart> findByUserUserId(Integer userId);
 
-    void deleteByUserUserId(Integer userId);
+    List<Cart> findByUser(User user);
+
+    Optional<Cart> findByUserAndBook(User user, Book book);
 }
